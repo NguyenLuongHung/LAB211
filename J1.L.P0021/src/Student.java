@@ -1,45 +1,39 @@
-// J1.L.P0021
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
+/**
+ *
+ * @author Admin
+ */
 public class Student {
-    private String id;
-    private String name;
-    private int semester;
-    private String course;
+    String id;
+    String name;
+    String semester;
+    String course;
     
-    Student(String id, String name, int semester, String course){
+    Student(String id, String name, String semester, String course){
         this.id = id;
         this.name = name;
         this.semester = semester;
         this.course = course;
     }
-    
-    void setId(String id){
+
+    public void setId(String id) {
         this.id = id;
     }
-    void setName (String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    void setSemester (int semester){
+
+    public void setSemester(String semester) {
         this.semester = semester;
     }
-    void setCourse (String course){
+
+    public void setCourse(String course) {
         this.course = course;
-    }
-    
-    String getId(){
-        return this.id;
-    }
-    String getName(){
-        return this.name;
-    }
-    int getSemester(){
-        return this.semester;
-    }
-    String getCourse(){
-        return this.course;
-    }
-    
-    void display(){
-        System.out.println(name);
     }
 }

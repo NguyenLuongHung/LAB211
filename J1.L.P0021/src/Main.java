@@ -11,9 +11,9 @@
 public class Main {
     public static void main(String[] args) {
         StudentList a = new StudentList();
-        a.create();
-        a.create();
-        a.create();
+        a.add();
+        a.add();
         a.find();
+        a.update();
     }
 }
