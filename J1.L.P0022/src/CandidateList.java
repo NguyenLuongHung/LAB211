@@ -14,281 +14,282 @@ import java.util.Scanner;
  */
 public class CandidateList {
 
-    int id;
+    List<Candidate> canList = new ArrayList();
+    
+    
+    
+    
+    
+    
+    
+    Scanner in = new Scanner(System.in);
+    Input input = new Input();
+    Format format = new Format();
+    String id;
     String firstName;
     String lastName;
-    int birtDate;
+    String birtDate;
     String address;
-    int phone;
+    String phone;
     String email;
-    int type;
-    List<Experience> exp = new ArrayList();
-    List<Fresher> fresh = new ArrayList();
-    List<Intern> intern = new ArrayList();
-    Scanner in = new Scanner(System.in);
-
-    // add Experience to the list
-    void addExp(Experience e) {
-        exp.add(e);
-    }
-
-    // add Fresher to the list
-    void addFresh(Fresher e) {
-        fresh.add(e);
-    }
-
-    // add Intern to the list
-    void addIntern(Intern e) {
-        intern.add(e);
-    }
-
-    // Check BirtDate
-    boolean checkBirtDate(int birtDate) {
-        if (birtDate < 2018 && birtDate > 1900) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Check Phone minimum character
-    boolean checkPhoneCharacter(int phone) {
-        String phone1 = phone + "";
-        if (phone1.length() < 10) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    // Check Gmail format
-    boolean checkEmail(String email) {
-        int count = 0;
-        for (int i = 0; i < email.length(); i++) {
-            if (email.charAt(i) == '@') {
-                count++;
-            }
-        }
-        if (count == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Check Year Of Exp
-    boolean checkYearOfExp(int exp) {
-        if (exp <= 100 && exp >= 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // check Rank of Graduation
-    boolean checkRank(String rank) {
-        if ((rank.equals("Excellenec")) || (rank.equals("Good")) || (rank.equals("Fair")) || (rank.equals("Poor"))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Input common attributes
-    void inputCommon() {
-        // input id
-        System.out.print("Please enter id: ");
-        id = Integer.parseInt(in.nextLine());
+    String type;
+    void autoAdd(){
+        // Auto add ==========================================
+        canList.add (new Experience("1", "Aelbrecht", "Stefan", "1980", "US", "0123456789", "ael@fpt.vn", "0", "80", "PRO"));
+        canList.add (new Experience("2", "Aguirre", "Eva", "1989", "VN", "01234289", "agu@fpt.vn", "0", "50", "PRO"));
+        canList.add (new Fresher("3", "Ah", "Stefan", "1980", "US", "0123456789", "ael@fpt.vn", "1", "12/02/2012", "Poor", "FPT"));
+        canList.add (new Fresher("4", "Cabrera", "Cornde", "2000", "lAOS", "01223456789", "Cabre@fpt.vn", "1", "07/04/2015", "Good", "FTU"));
+        canList.add (new Intern("5", "joana", " Filipa", "1970", "Nigeria", "09923456789", "joana@fpt.vn", "2", "IA", "Spring", "FPT"));
+        canList.add (new Intern("5", "Patricia", "Carine", "1960", "VN", "011223456789", "Patreicia@fpt.vn", "2", "FE", "Winter", "FPT"));
         
-        // input first name
-        System.out.print("Please enter first name: ");
-        firstName = in.nextLine();
-        // input last name
-        System.out.print("Plesae enter last name: ");
-        lastName = in.nextLine();
-
-        // We check the validation of birthdate
-        boolean checkBirtDate = false;
+        // ===================================================
+    }
+    void add(int inputType) {
+        
+        
+        
+        
+        // Input id
+        // We use do while loop to ask user to enter id, if the id exists
+        // We ask user to input again
         do {
-            System.out.print("Please enter birt date: ");
-            try {
-                // If user inputs character instead of a valid number, we will catch exception and ask user to input again
-                birtDate = Integer.parseInt(in.nextLine());
-                checkBirtDate = true;
-                if (!checkBirtDate(birtDate)) {
-                    System.out.println("Invalid date of birth, try again!");
+            System.out.print("Enter candidate id: ");
+            id = in.nextLine();
+            // If checkDuplicateByID() is false, then we ask user to input id 
+            // again 
+            if (!input.checkDuplicateByID(id, canList)) {
+                System.out.println("Candidate id is already exists, "
+                        + "please try again!");
+            }
+        } while (!input.checkDuplicateByID(id, canList));
+
+        // Input first name
+        // We use do while loop to ask user to enter valid first name
+        do {
+            System.out.print("Enter first name: ");
+            firstName = in.nextLine();
+            firstName = format.firstCharToUpper(firstName);
+            // If checkName() is false, then we ask user to input first name
+            // again
+            if (!input.checkName(firstName)) {
+                System.out.println("Invalid first name, please re-enter!");
+            }
+
+        } while (!input.checkName(firstName));
+
+        // Input last name
+        // We use do while loop to ask user to enter valid last name
+        do {
+            System.out.print("Enter last name: ");
+            lastName = in.nextLine();
+            lastName = format.firstCharToUpper(lastName);
+            // If checkName() is false, then we ask user to input last name
+            // again
+            if (!input.checkName(lastName)) {
+                System.out.println("Invalid last name, please re-enter!");
+            }
+        } while (!input.checkName(lastName));
+
+        // Input birth date
+        // We use do while loop to ask user to enter valid birth date
+        do {
+            System.out.print("Enter birth date: ");
+            birtDate = in.nextLine();
+            //if checkBirthDate() is false, then we ask user to input 
+            // birthDate again
+            if (!input.checkBirthDate(birtDate)) {
+                System.out.println("Invalid birth date, please re-enter!");
+            }
+
+        } while (!input.checkBirthDate(birtDate));
+
+        // Input address
+        System.out.print("Enter address: ");
+        address = in.nextLine();
+
+        // Input phone number
+        // We use do while loop to check valid phone number
+        do {
+            System.out.print("Enter phone number: ");
+            phone = in.nextLine();
+            // if checkPhoneNumber() is false, then we ask user to re-enter
+            // phone number again
+            if (!input.checkPhoneNumber(phone)) {
+                System.out.println("Invalid phone number, please re-enter!");
+            }
+        } while (!input.checkPhoneNumber(phone));
+
+        // Input email
+        // We use do while loop to check valid emain
+        do {
+            System.out.print("Enter email: ");
+            email = in.nextLine();
+            // If checkEmail() is false, then we ask user to re-enter email
+            if (!input.checkEmail(email)) {
+                System.out.println("Invalid email, please re-enter email: ");
+            }
+        } while (!input.checkEmail(email));
+
+        
+
+        if (inputType == 0) {
+            String expInYear;
+            String proSkill;
+            // Input year of experience
+            // We use do while to ask user to enter valid yearOfExp
+            do {
+                System.out.print("Enter year of experience: ");
+                expInYear = in.nextLine();
+                // If checkYearOfExp() is false, then we ask user to re-enter
+                // year of exp
+                if (!input.checkYearOfExp(expInYear)) {
+                    System.out.println("Invalid year of experience,"
+                            + " please re-enter!");
                 }
-            } catch (Exception e) {
-                checkBirtDate = false;
-                System.out.println("Invalid date of birth, try again!");
-            }
+            } while (!input.checkYearOfExp(address));
 
-        } // We use do while loop to ask user to input a valid birthday
-        while (checkBirtDate == false || checkBirtDate(birtDate) == false);
+            // Input proSkill
+            System.out.print("Enter pro skill: ");
+            proSkill = in.nextLine();
 
-        // We check the validation of phone 
-        boolean checkPhone = false;
-        do {
-            System.out.print("Please enter phone: ");
-            try {
-                // If user inputs character instead of number, we will catch exception and ask user to input again
-                phone = Integer.parseInt(in.nextLine());
-                checkPhone = true;
-                if (!checkPhoneCharacter(phone)) {
-                    System.out.println("Invalid phone number, try again!");
+            Experience exp = new Experience(id, firstName, lastName,
+                    birtDate, address, phone, email, "1", expInYear, proSkill);
+            canList.add(exp);
+        } else if (inputType == 1) {
+            String timeOfGraduation;
+            String rankOfGraduation;
+            String university;
+            // Input graduated time
+            // We use do while to ask user to enter valid time
+            do {
+                System.out.print("Enter graduation time: ");
+                timeOfGraduation = in.nextLine();
+                // If checkDate() is false, then we ask user to enter time again
+                if (!input.checkDate(timeOfGraduation)) {
+                    System.out.println("Invalid date, please re-enter as "
+                            + "format (MM/dd/yyyy)!");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                checkPhone = false;
-                System.out.println("Invalid phone number, try again!");
-            }
-        } // We use do while loop to ask user to input a valid phone number
-        while (checkPhone == false || checkPhoneCharacter(phone) == false);
-        
-        // Input and check email format
-        do {
-        System.out.print("Please enter email: ");
-        email = in.nextLine();
-        if (!checkEmail(email)) System.out.println("Invalid email, please try again!");
-        } while (!checkEmail(email));
-        
-        // input type
-        System.out.print("Please enter type of candidate: ");
-        type = Integer.parseInt(in.nextLine());
-    }
-    
-    // ===================================== Input each kind of candidate ================================================ //
-    
-    // ==================================input Experience ==============================================//
-    void inputExp(){
-        int yearOfExp = 0;
-        // input common attributes
-        inputCommon();
-        // Input year of exp
-        boolean checkYear = false;
-        do {
-            // input year of experience
-            System.out.print("Please enter year of experience: ");
-            try {
-                // If user inputs character instead of a number, we will catch exception and ask user to input again
-                yearOfExp = Integer.parseInt(in.nextLine());
-                checkYear = true;
-                if (!checkYearOfExp(yearOfExp)) System.out.println("Invalid year of exp, please try again!");
-            }
-            catch (Exception e){
-                checkYear = false;
-                System.out.println("Invalid year of exp, please try again!");
-            }
-            
-        } // we use do while loop to ask user to input a valid Years of Exp 
-        while (checkYear == false || checkYearOfExp(yearOfExp) == false);
-        // Input pro skill
-        System.out.print("Please enter pro skill: ");
-        String proSkill = in.nextLine();
-        // add Experience to the ArrayList
-        addExp(new Experience(id, firstName, lastName, birtDate, address, phone, email, type, yearOfExp, proSkill));
-    }
-    
-    // =================================== input Fresher =============================================//
-    
-    void inputFresh(){
-        // input common attributes
-        inputCommon();
-        // input graduation type
-        System.out.print("Please input graduation date: ");
-        String graduation_date = in.nextLine();
-        String rank;
-        do {
-            // input graduation rank
-            System.out.print("Please input graduation rank: ");
-            rank = in.nextLine();
-            if (!checkRank(rank)) System.out.println("Invalid rank, please input the graduation rank again!");
-        } // We use do while loop to ask user to input a valid graduation rank
-        while (!checkRank(rank));
-        // input graduation university
-        System.out.print("Please input graduation university: ");
-        String university = in.nextLine();
-        
-        // add fresher to the ArrayList
-        addFresh(new Fresher (id, firstName, lastName, birtDate, address, phone, email, type, graduation_date, rank, university));
-        
-    }
-    
-    // =================================== input Intern ==============================================//
-    
-    void inputIntern(){
-        // input common attributes
-        inputCommon();
-        // input intern major
-        System.out.print("Please input major: ");
-        String major = in.nextLine();
-        // input intern semester
-        System.out.print("Please input Semester: ");
-        int semester = Integer.parseInt(in.nextLine());
-        // input intern university
-        System.out.print("Please input University name: ");
-        String university = in.nextLine();
-        // add intern to the ArrayList
-        addIntern(new Intern(id, firstName, lastName, birtDate, address, phone, email, type, major, semester, university));        
-    }
+            } while (!input.checkDate(timeOfGraduation));
 
-    // Search and Display Candidate
-    void searchAndDisplay() {
-        System.out.println("List of candidate: ");
-        System.out.println("==============EXPERIENCE CANDIDATE===================");
-        // Display Experienec Candidate
-        for (int i = 0; i < exp.size(); i++) {
-            System.out.println(exp.get(i).firstName + " " + exp.get(i).lastName);
-        }
-        System.out.println("===============FRESHER CANDIDATE=====================");
-        // Display Fresh Candidate
-        for (int i = 0; i < fresh.size(); i++) {
-            System.out.println(fresh.get(i).firstName + " " + fresh.get(i).lastName);
+            // Input graduation rank
+            // We use do while loop to ask user to enter valid rank
+            do {
+                System.out.print("Enter graduation rank: ");
+                rankOfGraduation = in.nextLine();
+                // if checkRank() is false, then we ask user to enter rank again
+                if (!input.checkRank(rankOfGraduation)) {
+                    System.out.println("Invalid rank, please re-enter"
+                            + " (Exellence, Good, Fair or Poor)!");
+                }
+            } while (!input.checkRank(rankOfGraduation));
+
+            // Input university
+            // We use do while loop to ask user to enter valid university
+            do {
+                System.out.print("Enter university name: ");
+                university = in.nextLine();
+                university = format.firstCharToUpper(university);
+                // If checkName() is false, then we ask user to re-enter
+                // univeristy
+                if (!input.checkName(university)) {
+                    System.out.println("Invalid university name, please re-enter");
+                }
+            } while (!input.checkName(university));
+            Fresher fresher = new Fresher(id, firstName, lastName, birtDate,
+                    address, phone, email, "1", timeOfGraduation, rankOfGraduation, university);
+            canList.add(fresher);
+        } else if (inputType == 2) {
+            String majors;
+            String semester;
+            String university;
+
+            // Input majors
+            System.out.print("Enter major: ");
+            majors = in.nextLine();
+
+            // Input semester
+            // We use do while to check valid semester
+            do {
+                System.out.print("Enter semester: ");
+                semester = in.nextLine();
+                semester = format.firstCharToUpper(semester);
+                // If checkSemester() is false, then we ask user to re-enter
+                // semester
+                if (!input.checkSemester(semester)) {
+                    System.out.println("Invalid semester, "
+                            + "please re-enter semester (Spring, Summer, or Winter");
+                }
+            } while (!input.checkSemester(semester));
+
+            // We use do while loop to check valid university    
+            do {
+            // Input university
+                System.out.print("Enter university: ");
+                university = in.nextLine();
+                university = format.firstCharToUpper(university);
+                // If checkName() is false, then we ask user to re-enter
+                // university name
+                if (!input.checkName(university)) {
+                    System.out.println("Invalid university name, please re-enter");
+                }
+            } while (!input.checkName(university));
+
+            Intern intern = new Intern(id, firstName, lastName, birtDate,
+                    address, phone, email, "2", majors, semester, university);
+
+            canList.add(intern);
         }
 
-        System.out.println("===============INTERN CANDIDATE================");
-
-        // Display Intern Candidate
-        for (int i = 0; i < intern.size(); i++) {
-            System.out.println(intern.get(i).firstName + " " + intern.get(i).lastName);
-        }
-
+    }
+    
+    void search (){
+        String name;
+        String type;
+        format.displayList(canList);
         System.out.println("");
-        // Input name to search
-        System.out.print("Input Candidate name (First name or Last name): ");
-        String name = in.nextLine();
-        // Input type of candidate to search
-        System.out.print("Input type of candidate: ");
-        int type = Integer.parseInt(in.nextLine());
-        // =============================================== Display found cancdidate ===============================================================
-        System.out.println("The candidates found:");
-        if (type == 0) {
-            for (int i = 0; i < exp.size(); i++) {
-                if (exp.get(i).firstName.contains(name) || exp.get(i).lastName.contains(name)) {
-                    System.out.println(exp.get(i).firstName + " " + exp.get(i).lastName + " | " + exp.get(i).birtDate + " | " + exp.get(i).address + " | " + exp.get(i).phone + " | " + exp.get(i).email + " | " + exp.get(i).type);
-                }
+        List<Candidate> search = new ArrayList();
+        
+        
+        // Input name to find
+        // We use do while to check valid name
+        do {
+            System.out.print("Input Candidate name (First name or Last name): ");
+            name = in.nextLine();
+            // If checkName() is false, then we ask user to re-enter
+            if (!input.checkName(name)){
+                System.out.println("Invalid name, please re-enter name!");
             }
-        } else if (type == 1) {
-            for (int i = 0; i < fresh.size(); i++) {
-                if (fresh.get(i).firstName.contains(name) || fresh.get(i).lastName.contains(name)) {
-                    System.out.println(fresh.get(i).firstName + " " + fresh.get(i).lastName + " | " + fresh.get(i).birtDate + " | " + fresh.get(i).address + " | " + fresh.get(i).phone + " | " + fresh.get(i).email + " | " +  fresh.get(i).type);
-                }
+        } while (!input.checkName(name));
+        
+        // Input type to find
+        // We use do while to check valid type
+        do {
+            System.out.print("Input type of candidate: ");
+            type = in.nextLine();
+            // If checkType() is false, then we ask user to re-enter type
+            if (!input.checkType(type)) {
+                System.out.println("Invalid type, please re-enter "
+                        + "type (0, 1 or 2)!");
             }
-        } else if (type == 2) {
-            for (int i = 0; i < intern.size(); i++) {
-
-                if (intern.get(i).firstName.contains(name) || intern.get(i).lastName.contains(name)) {
-                    System.out.println(intern.get(i).firstName + " " + intern.get(i).lastName + " | " + intern.get(i).birtDate + " | " + intern.get(i).address + " | " + intern.get(i).phone + " | " + intern.get(i).email + " | " + intern.get(i).type);
-                }
-            }
-        }
-
-    }
-    void displayFound(List<Candidate> e, String name){
-        for (int i = 0; i < e.size(); i++) {
-            if (e.get(i).firstName.contains(name) || e.get(i).lastName.contains(name)) {
-                System.out.println(e.get(i).firstName + " " + e.get(i).lastName + " | " + e.get(i).birtDate + " | " + e.get(i).address + " | " + e.get(i).phone + " | " + e.get(i).email + " | " + e.get(i).type);
+        } while (!input.checkType(type));
+        
+        for (int i = 0; i < canList.size(); i++) {
+            String fullName = canList.get(i).firstName + " " + canList.get(i).lastName;
+            if (fullName.toLowerCase().contains(name.toLowerCase()) && canList.get(i).type.equalsIgnoreCase(type)){
+                search.add(canList.get(i));
             }
         }
+        
+        if (!search.isEmpty()){
+            System.out.println("The candidates found: ");
+            format.displayFound(search);
+        }
+        else {
+            System.out.println("-----------------------------");
+            System.out.println("No candidate found!");
+            System.out.println("-----------------------------");
+        }
+            
     }
+
 }
