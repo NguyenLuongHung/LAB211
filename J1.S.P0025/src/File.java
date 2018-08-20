@@ -18,9 +18,12 @@ import java.io.IOException;
  */
 public class File {
     
+    Normalize normalize = new Normalize();
     // We write a function to read a input file
     String readFile(String fileName){
+        int firstLine = 0;
         int current;
+        String line;
         String text = "";
         try {
             // FileReader reads text file in the default encoding
@@ -28,10 +31,25 @@ public class File {
             
             // Alway wrap FileReader in BufferedReader
             BufferedReader br = new BufferedReader(fr);
-            while((current = br.read()) != -1){
-                text += (char)current;
+            while((line = br.readLine()) != null){
+                
+                if (line.isEmpty()){
+                    continue;
+                }
+                if (firstLine == 0){
+                    text += normalize.normalize(line);
+                    text = normalize.checkFirstCharacter(text);
+                    continue;
+                        
+                }
+
+                text += normalize.normalize(line);
+                firstLine++;
+                   
                 
             }
+            
+            
             
             // Alway close after finishing
             br.close();
@@ -42,6 +60,7 @@ public class File {
          catch (IOException e){
              System.out.println("Error reading file '" + "'");
          }
+        
         return text;
     }
     

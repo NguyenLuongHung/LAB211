@@ -64,13 +64,13 @@ public class Normalize {
         String text1 = "";
         for (int i = 0; i < text.length(); i++) {
             // If this character is space and the next character is a colon then we dont add to text1
-            if(text.charAt(i) == 32 && text.charAt(i+1) == 44)
+            if(text.charAt(i) == 32 &&  i < text.length() - 1 && text.charAt(i+1) == 44 )
                 continue;
             // If this character is space and the next character is a dot then we dont add to text1
-            else if (text.charAt(i) == 32 && text.charAt(i+1) == 46 )
+            else if (text.charAt(i) == 32 && i < text.length() - 1  && text.charAt(i+1) == 46 )
                 continue;
             // If this character is space and the next character is a semicolon then we dont add to text1
-            else if (text.charAt(i) == 32 && text.charAt(i+1) == 58 )
+            else if (text.charAt(i) == 32 && i < text.length() - 1 && text.charAt(i+1) == 58 )
                 continue;
             else
                 text1 += text.charAt(i);
@@ -113,7 +113,7 @@ public class Normalize {
                     index = i+1;
                 
                 for (int j = i; j < text.length(); j++) {
-                    if (text.charAt(j) == 32 && text.charAt(j+1) == 34)
+                    if (text.charAt(j) == 32 && j < text.length() - 1 && text.charAt(j+1) == 34)
                         index1 = j;
                 }
                 text1 += text.charAt(i);
@@ -134,6 +134,7 @@ public class Normalize {
     // Check if there is a dot at the end of the text
     String checkDotEnd(String text){
         if (text.charAt(text.length()-1) != 46){
+//            text = text.substring(0, text.length()-1) + '.';
             text += '.';
         }
         return text;
@@ -161,5 +162,27 @@ public class Normalize {
              
         }
         return text1;
+    }
+    
+    boolean checkSpaceEnd (String text){
+       if (text.charAt(text.length() - 1) != ' ') {
+           return true;
+       }
+       else {
+           return false;
+       }
+    }
+    
+    String normalize(String text){
+        
+        text = checkSpace(text);
+        text = checkAfter(text);
+        text = checkDotUpper(text);
+        text = checkQuote(text);
+        if (checkSpaceEnd(text)){
+            text += " ";
+        }
+        
+        return text;
     }
 }

@@ -11,20 +11,8 @@
 public class Main {
     
     public static void main(String[] args) {
-        File file1 = new File();
-        Normalize normalize = new Normalize();
-        
+        File file1 = new File();  
         String text = file1.readFile("input.txt");
-        
-//      text = normalize.checkNewLine(text);
-        text = normalize.checkBlankLine(text);
-        text = normalize.checkSpace(text);
-        text = normalize.checkFirstCharacter(text);
-        text = normalize.checkAfter(text);
-        text = normalize.checkDotUpper(text);
-        text = normalize.checkQuote(text);
-        text = normalize.checkDotEnd(text);
-        
 
         System.out.println(text);
         file1.writeFile(text, "output.txt");
