@@ -128,11 +128,13 @@ public class Normalize {
                 text1 += text.charAt(i);
             } else // If i == index which means this character is the character needing
             // upper, then we upper this character
-             if (i == index) {
+            {
+                if (i == index) {
                     text1 += upper;
                 } else {
                     text1 += text.charAt(i);
                 }
+            }
         }
         return text1;
     }
@@ -152,9 +154,11 @@ public class Normalize {
                 index = i + 2;
 
                 text1 += text.charAt(i);
+            // If ' i == index', it means this character is the one that we
+            // need to lowercase
             } else if (i == index) {
                 text1 += lower;
-
+            // Else if it's not, we just add character to text1 normally
             } else {
                 text1 += text.charAt(i);
             }
@@ -166,11 +170,15 @@ public class Normalize {
     // This function is used to check if there's space before open quote
     String checkSpaceBeforeQuote(String text) {
         String text1 = "";
+        // This for loop is used to find the character which open quote and
+        // the previous character is not a space
         for (int i = 0; i < text.length(); i++) {
+            // If it is, then we add one space before the open quote
             if (text.charAt(i) == 34 && text.charAt(i - 1) != 32) {
                 text1 += " " + text.charAt(i);
-            } else if (text.charAt(i) == 46) {
-                text1 += text.charAt(i);
+//            } else if (text.charAt(i) == 46) {
+//                text1 += text.charAt(i);
+            // Else if it's not, then we add character to text1 normally
             } else {
                 text1 += text.charAt(i);
             }
@@ -228,11 +236,12 @@ public class Normalize {
 
     // Check if there is a dot at the end of the text
     String checkDotEnd(String line, String lineTemp) {
-        
-            if (lineTemp.charAt(lineTemp.length() - 1) != '.') {
-                return ".";
-            }
-        
+        // If there isn't a (.) at the end of text, return "."
+        if (lineTemp.charAt(lineTemp.length() - 1) != '.') {
+            return ".";
+        }
+
+        // Else return nothing
         return "";
     }
 
@@ -267,12 +276,14 @@ public class Normalize {
                 text1 += text.charAt(i);
             } // else if is
             else // if last character is space, we dont add to text1
-             if (text.charAt(i) == ' ') {
+            {
+                if (text.charAt(i) == ' ') {
                     continue;
                 } // else we add to text1
                 else {
                     text1 += text.charAt(i);
                 }
+            }
 
         }
         return text1;
