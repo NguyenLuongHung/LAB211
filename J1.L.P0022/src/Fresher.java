@@ -1,3 +1,6 @@
+
+import java.util.List;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,22 +9,20 @@
 
 /**
  *
- * @author Admin
+ * @author hungnlhe130716
  */
 public class Fresher extends Candidate {
-    String graduation_date;
-    String graduation_rank;
 
-    public void setGraduation_date(String graduation_date) {
-        this.graduation_date = graduation_date;
+    String dateOfGraduation;
+    String rankOfGraduation;
+    String university;
+
+    public void setDateOfGraduation(String dateOfGraduation) {
+        this.dateOfGraduation = dateOfGraduation;
     }
 
-    public void setGraduation_rank(String graduation_rank) {
-        this.graduation_rank = graduation_rank;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
+    public void setRankOfGraduation(String rankOfGraduation) {
+        this.rankOfGraduation = rankOfGraduation;
     }
 
     public void setId(String id) {
@@ -56,16 +57,12 @@ public class Fresher extends Candidate {
         this.type = type;
     }
 
-    public String getGraduation_date() {
-        return graduation_date;
+    public String getDateOfGraduation() {
+        return dateOfGraduation;
     }
 
-    public String getGraduation_rank() {
-        return graduation_rank;
-    }
-
-    public String getEducation() {
-        return education;
+    public String getRankOfGraduation() {
+        return rankOfGraduation;
     }
 
     public String getId() {
@@ -99,20 +96,90 @@ public class Fresher extends Candidate {
     public String getType() {
         return type;
     }
-    String education;
     
-    public Fresher(String id, String firstName, String lastName, String birtDate, String address, String phone, String email, String type, String graduation_date, String graduation_rank, String education ){
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birtDate = birtDate;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.type = type;
-        this.graduation_date = graduation_date;
-        this.graduation_rank = graduation_rank;
-        this.education = education;
+    public Fresher (){
+        
+    }
+        
+    public Fresher( String id, String firstName, String lastName
+            , String birtDate, String address, String phone, String email
+            , String type, String dateOfGraduation, String rankOfGraduation
+            , String university) {
+        super(id, firstName, lastName, birtDate, address, phone, email, type);
+        this.dateOfGraduation = dateOfGraduation;
+        this.rankOfGraduation = rankOfGraduation;
+        this.university = university;
+    }
+
+    @Override
+    Fresher createNew(List<Candidate> canList) {
+        super.createNew(canList);
+        String timeOfGraduation;
+        String rankOfGraduation;
+        String university;
+
+        // Input graduated time
+        // We use do while to ask user to enter valid time
+        do {
+            System.out.print("Enter graduation time: ");
+            timeOfGraduation = in.nextLine();
+            // If checkDate() is false, then we ask user to enter time again
+            if (!input.checkDate(timeOfGraduation)) {
+                System.out.println("Invalid date, please re-enter "
+                        + "as format (MM/dd/yyyy)!");
+                continue;
+            }
+            // If date is blank, then ask user to re-enter
+            if (!input.checkBlank(timeOfGraduation)){
+                System.out.println("Blank date, please re-enter");
+            }
+        } while (!input.checkDate(timeOfGraduation) 
+                || !input.checkBlank(timeOfGraduation));
+
+        // Input graduation rank
+        // We use do while loop to ask user to enter valid rank
+        do {
+            System.out.print("Enter graduation rank: ");
+            rankOfGraduation = in.nextLine();
+            // If checkRank() is false, then we ask user toenter rank again
+            if (!input.checkRank(rankOfGraduation)) {
+                System.out.println("Invalid rank, please re-enter"
+                        + " (Excellence, Good, Fair or Poor)!");
+                continue;
+            }
+            // If rank is blank, ask user to re-enter
+            if (!input.checkBlank(rankOfGraduation)){
+                System.out.println("Blank rank, please re-enter");
+            }
+        } while (!input.checkRank(rankOfGraduation) 
+                || !input.checkBlank(rankOfGraduation));
+
+        // Input university
+        // We use do while loop to ask user to enter valid university
+        do {
+            System.out.print("Enter university name: ");
+            university = in.nextLine();
+            
+            // If checkName() is false, then we ask user to re-enter
+            // university
+            if (!input.checkName(university)) {
+                System.out.println("Invalid university name, "
+                        + "please re-enter");
+                continue;
+            }
+            // If university name is blank, then ask user to re-enter
+            if (!input.checkBlank(university)){
+                System.out.println("Blank university name, please re-enter");
+                continue;
+            }
+            university = format.firstCharToUpper(university);
+        } while (!input.checkName(university) || !input.checkBlank(university));
+
+        Fresher fresher = new Fresher(id, firstName, lastName, birtDate, address
+                , phone, email, "1", timeOfGraduation, rankOfGraduation
+                , university);
+        return fresher;
     }
     
+
 }
